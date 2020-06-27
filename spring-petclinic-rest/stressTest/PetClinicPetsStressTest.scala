@@ -5,7 +5,7 @@ import io.gatling.http.Predef._
 import scala.concurrent.duration._
 import scala.util.Random
 
-class PetClinicRouterPetsStressTest extends Simulation {
+class PetClinicPetsStressTest extends Simulation {
 
   val httpProtocol = ConfigTest.httpProtocolPattern()
 
@@ -23,7 +23,7 @@ class PetClinicRouterPetsStressTest extends Simulation {
 
   def goToAddPetAndAddOne() = {
     exec(http("Adding Pet")
-      .post("/api/owners/")
+      .post("/api/pets")
       .body(StringBody("""{
                           "id": 3,
                           "name": "Lucas",
@@ -53,7 +53,7 @@ class PetClinicRouterPetsStressTest extends Simulation {
 
   def goToEditAPet() = {
     exec(http("Editing a Pet")
-    .put("/api/pets/3"))
+    .put("/api/pets/3")
     .body(StringBody("""{
                         "id": 3,
                         "name": "Lucas",
@@ -72,12 +72,6 @@ class PetClinicRouterPetsStressTest extends Simulation {
                         },
                           "visits": []
                        }""")).asJSON
-
-  }
-
-  def goToDeleteAPet() = {
-    exec(http("Deleting a Pet")
-      .delete("/api/pets/1")
       .check(status.is(204)))
   }
 
@@ -97,8 +91,6 @@ class PetClinicRouterPetsStressTest extends Simulation {
       .exec(goToASpecificPet())
       .pause(2)
       .exec(goToEditAPet())
-      .pause(2)
-      .exec(goToDeleteAPet())
       .pause(2)
       .exec(goToGetPetTypes())
       .pause(2)

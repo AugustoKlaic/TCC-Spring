@@ -5,7 +5,7 @@ import io.gatling.http.Predef._
 import scala.concurrent.duration._
 import scala.util.Random
 
-class PetClinicRouterVetsStressTest extends Simulation {
+class PetClinicVetsStressTest extends Simulation {
 
   val httpProtocol = ConfigTest.httpProtocolPattern()
 
@@ -43,13 +43,6 @@ class PetClinicRouterVetsStressTest extends Simulation {
     .check(status.is(204)))
   }
 
-  def goToDeleteAnSpecificVet() = {
-    exec(http("Delete a Vet")
-      .delete("/api/vets/1")
-      .check(status.is(204)))
-  }
-
-
   val test = scenario("Vets scenario")
     .exec(goToVetListPage())
     .pause(2)
@@ -60,8 +53,6 @@ class PetClinicRouterVetsStressTest extends Simulation {
     .exec(goToEditAVet())
     .pause(2)
     .exec(goToVetListPage())
-    .pause(2)
-    .exec(goToDeleteAnSpecificVet())
     .pause(2)
 
   setUp(
