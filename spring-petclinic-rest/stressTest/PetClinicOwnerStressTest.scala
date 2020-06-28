@@ -30,13 +30,13 @@ class PetClinicOwnerStressTest extends Simulation {
 
   def goToASpecificOwner() = {
     exec(http("Getting specific Owner")
-    .get("/api/owners/1")
+    .get("/api/owners/3")
     .check(status.is(200)))
   }
 
   def goToEditAnOwner() = {
     exec(http("Editing an Owner")
-    .put("/api/owners/1")
+    .put("/api/owners/6")
     .body(StringBody("""{
                       "address": "Broadway, 10",
                       "city": "Seatle",
@@ -52,8 +52,6 @@ class PetClinicOwnerStressTest extends Simulation {
     .pause(2)
     .exec(goToAddOwnersAndAddOne())
     .pause(2)
-    .exec(goToOwnerListPage())
-    .pause(2)
     .exec(goToASpecificOwner())
     .pause(2)
     .exec(goToEditAnOwner())
@@ -61,9 +59,17 @@ class PetClinicOwnerStressTest extends Simulation {
 
   setUp(
     test.inject(
-      atOnceUsers(1),
-      rampUsersPerSec(1) to(3) during(6 seconds),
-      constantUsersPerSec(30) during(3 seconds) randomized
+      atOnceUsers(100),
+      rampUsersPerSec(100) to(1000) during(15 seconds),
+      constantUsersPerSec(1000) during(60 seconds) randomized
     )
   ).protocols(httpProtocol)
+
+//  setUp(
+//    test.inject(
+//      atOnceUsers(10),
+//      rampUsersPerSec(10) to(100) during(15 seconds),
+//      constantUsersPerSec(100) during(60 seconds) randomized
+//    )
+//  ).protocols(httpProtocol)
 }

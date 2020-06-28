@@ -51,11 +51,19 @@ class PetClinicSpecialtiesStressTest extends Simulation {
     .exec(goToSpecialtiesList())
     .pause(2)
 
-  setUp(
-    test.inject(
-      atOnceUsers(1),
-      rampUsersPerSec(1) to(3) during(6 seconds),
-      constantUsersPerSec(30) during(3 seconds) randomized
-    )
-  ).protocols(httpProtocol)
+//  setUp(
+//    test.inject(
+//      atOnceUsers(50),
+//      rampUsersPerSec(50) to(200) during(15 seconds),
+//      constantUsersPerSec(200) during(60 seconds) randomized
+//    )
+//  ).protocols(httpProtocol)
+
+    setUp(
+      test.inject(
+        atOnceUsers(100),
+        rampUsersPerSec(100) to(1000) during(15 seconds),
+        constantUsersPerSec(1000) during(60 seconds) randomized
+      )
+    ).protocols(httpProtocol)
 }

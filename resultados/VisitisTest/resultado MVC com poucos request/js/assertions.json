@@ -1,0 +1,10 @@
+{
+  "simulation": "computerdatabase.PetClinicVisitsStressTest",
+  "simulationId": "petclinicvisitsstresstest",
+  "start": 1593314954706,
+  "description": "",
+  "scenarios": ["Visits scenario"],
+  "assertions": [
+
+  ]
+}
